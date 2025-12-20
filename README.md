@@ -6,21 +6,28 @@ A type-safe, testable SwiftUI navigation system for modern iOS apps.
 ![Platform](https://img.shields.io/badge/platforms-iOS%2017%2B%20%7C%20macOS%2014%2B%20%7C%20tvOS%2017%2B%20%7C%20watchOS%2010%2B-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)
 ![Xcode](https://img.shields.io/badge/Xcode-16%2B-blue.svg)
+![CI](https://github.com/arclabs-studio/ARCNavigation/actions/workflows/ci.yml/badge.svg)
 
 ---
 
+## Overview
+
+ARCNavigation provides a clean, Router-based navigation pattern for SwiftUI applications. It leverages Swift's type system to ensure compile-time safety for all navigation flows, while remaining fully testable without UI dependencies.
+
+Built with Swift 6 and strict concurrency compliance, ARCNavigation integrates seamlessly with modern SwiftUI apps using `@Observable` and `NavigationStack`.
+
 ## Features
 
-- ✅ Type-safe navigation with enum-based routes
-- ✅ Fully testable with Swift Testing
-- ✅ Clean separation of concerns
-- ✅ Support for complex navigation flows
-- ✅ Zero dependencies
-- ✅ Swift 6 ready with strict concurrency
+- Type-safe navigation with enum-based routes
+- Fully testable with Swift Testing
+- Clean separation of concerns
+- Support for complex navigation flows
+- Zero dependencies
+- Swift 6 ready with strict concurrency
 
 ## Requirements
 
-- iOS 17.0+
+- iOS 17.0+ / macOS 14.0+ / tvOS 17.0+ / watchOS 10.0+
 - Swift 6.0+
 - Xcode 16.0+
 
@@ -30,7 +37,7 @@ A type-safe, testable SwiftUI navigation system for modern iOS apps.
 
 Add ARCNavigation to your project via Xcode:
 
-1. File → Add Package Dependencies
+1. File > Add Package Dependencies
 2. Enter package URL: `https://github.com/arclabs-studio/ARCNavigation`
 3. Select version
 
@@ -42,12 +49,15 @@ dependencies: [
 ]
 ```
 
-## Quick Start
+## Usage
 
-### 1. Define your routes
+### 1. Define Your Routes
+
+Create an enum conforming to the `Route` protocol:
 
 ```swift
 import ARCNavigation
+import SwiftUI
 
 enum AppRoute: Route {
     case home
@@ -68,7 +78,7 @@ enum AppRoute: Route {
 }
 ```
 
-### 2. Setup router in your app
+### 2. Setup Router in Your App
 
 ```swift
 import SwiftUI
@@ -87,7 +97,7 @@ struct MyApp: App {
 }
 ```
 
-### 3. Navigate from your views
+### 3. Navigate from Your Views
 
 ```swift
 import SwiftUI
@@ -104,7 +114,7 @@ struct ContentView: View {
 }
 ```
 
-## Navigation API
+### Navigation API
 
 ```swift
 // Navigate forward
@@ -155,10 +165,12 @@ Check the `Examples/ARCNavigationDemo` folder for a complete working example wit
 
 ARCNavigation follows a simple and scalable architecture:
 
-- **Router**: Centralized navigation manager using `@Observable`
-- **Route**: Protocol-based route definition with enum cases
-- **Type-Safety**: Full compile-time safety with associated values
-- **Testing**: Built-in support for unit testing navigation flows
+| Component | Description |
+|-----------|-------------|
+| **Router** | Centralized navigation manager using `@Observable` |
+| **Route** | Protocol-based route definition with enum cases |
+| **Type-Safety** | Full compile-time safety with associated values |
+| **Testing** | Built-in support for unit testing navigation flows |
 
 ## Roadmap
 
@@ -167,12 +179,52 @@ ARCNavigation follows a simple and scalable architecture:
 - [ ] Custom transitions
 - [ ] URL-based navigation
 
-## License
+## Contributing
 
-MIT License - see LICENSE file for details
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+Please ensure your code:
+- Passes all tests (`swift test`)
+- Passes SwiftLint (`swiftlint lint`)
+- Includes appropriate documentation
+- Follows the existing code style
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2025 ARC Labs Studio
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ## Author
 
 **ARC Labs Studio** - iOS Development
 
-Built with ❤️ for the indie iOS developer community
+- GitHub: [@arclabs-studio](https://github.com/arclabs-studio)

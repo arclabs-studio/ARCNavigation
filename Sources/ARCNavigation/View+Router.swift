@@ -28,8 +28,21 @@ public extension View {
         _ router: Router<R>,
         @ViewBuilder destination: @escaping (R) -> some View
     ) -> some View {
-        NavigationStack(path: router.path) {
-            self
+        RouterNavigationStack(router: router, content: self, destination: destination)
+    }
+}
+
+// MARK: - Private Navigation Stack Wrapper
+
+/// Vista interna que envuelve NavigationStack con el binding correcto
+private struct RouterNavigationStack<R: Route, Content: View, Destination: View>: View {
+    @Bindable var router: Router<R>
+    let content: Content
+    let destination: (R) -> Destination
+
+    var body: some View {
+        NavigationStack(path: $router.path) {
+            content
                 .navigationDestination(for: R.self, destination: destination)
         }
         .environment(router)

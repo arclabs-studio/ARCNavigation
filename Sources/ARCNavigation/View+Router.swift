@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - View Extension
 
 public extension View {
-
     /// Configura el router de navegación para esta view hierarchy
     ///
     /// - Parameters:

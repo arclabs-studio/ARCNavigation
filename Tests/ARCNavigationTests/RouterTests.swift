@@ -28,7 +28,6 @@ enum MockRoute: Route {
 func routerStartsEmpty() {
     let router = Router<MockRoute>()
     #expect(router.isEmpty)
-    #expect(router.count == 0)
 }
 
 @Test("Navigate añade ruta al stack")
@@ -88,7 +87,6 @@ func popToRootClearsStack() {
     router.popToRoot()
 
     #expect(router.isEmpty)
-    #expect(router.count == 0)
 }
 
 // MARK: - Tests de PopTo

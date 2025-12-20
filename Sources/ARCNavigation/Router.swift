@@ -17,7 +17,6 @@ import SwiftUI
 /// ```
 @Observable
 public final class Router<R: Route> {
-
     // MARK: - Properties
 
     /// NavigationPath que maneja el stack de navegación

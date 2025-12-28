@@ -1,15 +1,17 @@
 //
-//  ARCNavigationDemoApp.swift
-//  ARCNavigationDemo
+//  ExampleAppApp.swift
+//  ExampleApp
 //
-//  Created by ARC Labs Studio on 2025-11-13.
+//  Created by ARC Labs Studio on 2025-12-28.
 //
 
-import SwiftUI
 import ARCNavigation
+import SwiftUI
 
+/// Main entry point for the ARCNavigation example application.
+/// Demonstrates type-safe navigation with Router and Route protocol.
 @main
-struct ARCNavigationDemoApp: App {
+struct ExampleAppApp: App {
 
     // MARK: - Properties
 

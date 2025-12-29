@@ -32,20 +32,14 @@ let package = Package(
         // Main library
         .target(
             name: "ARCNavigation",
-            path: "Sources/ARCNavigation",
-            swiftSettings: [
-                .enableUpcomingFeature("StrictConcurrency")
-            ]
+            path: "Sources/ARCNavigation"
         ),
 
         // Tests
         .testTarget(
             name: "ARCNavigationTests",
             dependencies: ["ARCNavigation"],
-            path: "Tests/ARCNavigationTests",
-            swiftSettings: [
-                .enableUpcomingFeature("StrictConcurrency")
-            ]
+            path: "Tests/ARCNavigationTests"
         )
         // Note: Demo apps are standalone Xcode projects in Example/ folder
         // NOT executable targets in Package.swift

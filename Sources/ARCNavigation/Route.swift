@@ -29,6 +29,7 @@ import SwiftUI
 ///     }
 /// }
 /// ```
+@MainActor
 public protocol Route: Hashable {
     associatedtype Destination: View
 

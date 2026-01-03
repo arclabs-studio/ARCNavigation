@@ -1,26 +1,30 @@
 //
 //  AppRoute.swift
-//  ARCNavigationDemo
+//  ExampleApp
 //
-//  Created by ARC Labs Studio on 2025-11-13.
+//  Created by ARC Labs Studio on 2025-12-28.
 //
 
-import SwiftUI
 import ARCNavigation
+import SwiftUI
 
+/// Defines all navigable routes in the example application.
+/// Demonstrates Route protocol usage with associated values.
 enum AppRoute: Route {
     case home
-    case profile(userName: String)
+    case profile(user: User)
     case settings
     case detail(id: Int)
+
+    // MARK: - Route
 
     @ViewBuilder
     func view() -> some View {
         switch self {
         case .home:
             HomeView()
-        case .profile(let userName):
-            ProfileView(userName: userName)
+        case .profile(let user):
+            ProfileView(user: user)
         case .settings:
             SettingsView()
         case .detail(let id):

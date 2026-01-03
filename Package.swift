@@ -32,10 +32,7 @@ let package = Package(
         // Main library
         .target(
             name: "ARCNavigation",
-            path: "Sources/ARCNavigation",
-            swiftSettings: [
-                .enableUpcomingFeature("StrictConcurrency")
-            ]
+            path: "Sources/ARCNavigation"
         ),
 
         // Tests

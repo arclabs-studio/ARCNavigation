@@ -50,7 +50,6 @@ import SwiftUI
 /// - ``path``
 @Observable
 public final class Router<R: Route> {
-
     // MARK: Properties
 
     /// The navigation path that manages the navigation stack.

@@ -9,7 +9,7 @@ import Testing
 @testable import ARCNavigation
 import SwiftUI
 
-// MARK: - Mock Route para testing
+// MARK: - Mock Route for Testing
 
 enum MockRoute: Route {
     case screen1
@@ -22,15 +22,15 @@ enum MockRoute: Route {
     }
 }
 
-// MARK: - Tests Básicos
+// MARK: - Basic Tests
 
-@Test("Router inicia vacío")
+@Test("Router starts empty")
 func routerStartsEmpty() {
     let router = Router<MockRoute>()
     #expect(router.isEmpty)
 }
 
-@Test("Navigate añade ruta al stack")
+@Test("Navigate adds route to stack")
 func navigateAddsRoute() {
     let router = Router<MockRoute>()
 
@@ -41,7 +41,7 @@ func navigateAddsRoute() {
     #expect(router.currentRoutes == [.screen1])
 }
 
-@Test("Navigate múltiple construye stack correcto")
+@Test("Multiple navigates build correct stack")
 func multipleNavigatesWork() {
     let router = Router<MockRoute>()
 
@@ -53,9 +53,9 @@ func multipleNavigatesWork() {
     #expect(router.currentRoutes == [.screen1, .screen2, .screen3])
 }
 
-// MARK: - Tests de Pop
+// MARK: - Pop Tests
 
-@Test("Pop elimina última ruta")
+@Test("Pop removes last route")
 func popRemovesLastRoute() {
     let router = Router<MockRoute>()
 
@@ -67,16 +67,16 @@ func popRemovesLastRoute() {
     #expect(router.currentRoutes == [.screen1])
 }
 
-@Test("Pop en stack vacío no crashea")
+@Test("Pop on empty stack is safe")
 func popOnEmptyStackIsSafe() {
     let router = Router<MockRoute>()
 
-    router.pop() // No debe crashear
+    router.pop() // Should not crash
 
     #expect(router.isEmpty)
 }
 
-@Test("PopToRoot limpia stack completo")
+@Test("PopToRoot clears entire stack")
 func popToRootClearsStack() {
     let router = Router<MockRoute>()
 
@@ -89,9 +89,9 @@ func popToRootClearsStack() {
     #expect(router.isEmpty)
 }
 
-// MARK: - Tests de PopTo
+// MARK: - PopTo Tests
 
-@Test("PopTo ruta específica funciona")
+@Test("PopTo specific route works")
 func popToSpecificRoute() {
     let router = Router<MockRoute>()
 
@@ -105,21 +105,21 @@ func popToSpecificRoute() {
     #expect(router.currentRoutes == [.screen1])
 }
 
-@Test("PopTo ruta inexistente no hace nada")
+@Test("PopTo non-existent route does nothing")
 func popToNonExistentRouteSafe() {
     let router = Router<MockRoute>()
 
     router.navigate(to: .screen1)
     let originalCount = router.count
 
-    router.popTo(.screen3) // Esta ruta no está en el stack
+    router.popTo(.screen3) // This route is not in the stack
 
     #expect(router.count == originalCount)
 }
 
-// MARK: - Tests con Associated Values
+// MARK: - Associated Values Tests
 
-@Test("Routes con associated values funcionan")
+@Test("Routes with associated values work")
 func routesWithAssociatedValues() {
     let router = Router<MockRoute>()
 
@@ -131,27 +131,27 @@ func routesWithAssociatedValues() {
     #expect(router.currentRoutes[1] == .detail(id: 99))
 }
 
-// MARK: - Tests de Flujos Complejos
+// MARK: - Complex Flow Tests
 
-@Test("Flujo completo de navegación")
+@Test("Complex navigation flow")
 func complexNavigationFlow() {
     let router = Router<MockRoute>()
 
-    // Navegar hacia adelante
+    // Navigate forward
     router.navigate(to: .screen1)
     router.navigate(to: .screen2)
     router.navigate(to: .detail(id: 1))
     #expect(router.count == 3)
 
-    // Pop una vez
+    // Pop once
     router.pop()
     #expect(router.count == 2)
 
-    // Navegar a otra parte
+    // Navigate elsewhere
     router.navigate(to: .screen3)
     #expect(router.count == 3)
 
-    // PopTo específico
+    // PopTo specific
     router.popTo(.screen1)
     #expect(router.count == 1)
 

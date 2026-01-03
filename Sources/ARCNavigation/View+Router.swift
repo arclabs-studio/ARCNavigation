@@ -10,18 +10,31 @@ import SwiftUI
 // MARK: - View Extension
 
 public extension View {
-    /// Configura el router de navegación para esta view hierarchy
+    /// Configures the navigation router for this view hierarchy.
+    ///
+    /// This modifier wraps the view in a `NavigationStack` and injects the
+    /// router into the environment, making it accessible to all child views
+    /// via `@Environment(Router<R>.self)`.
     ///
     /// - Parameters:
-    ///   - router: El router a utilizar
-    ///   - destination: Closure que retorna la vista para cada ruta
+    ///   - router: The router instance to use for navigation.
+    ///   - destination: A closure that returns the destination view for each route.
     ///
-    /// Ejemplo de uso:
+    /// - Returns: A view with navigation stack and router configured.
+    ///
+    /// ## Example
+    ///
     /// ```swift
-    /// ContentView()
-    ///     .withRouter(router) { route in
-    ///         route.view()
+    /// @State private var router = Router<AppRoute>()
+    ///
+    /// var body: some Scene {
+    ///     WindowGroup {
+    ///         ContentView()
+    ///             .withRouter(router) { route in
+    ///                 route.view()
+    ///             }
     ///     }
+    /// }
     /// ```
     func withRouter<R: Route>(
         _ router: Router<R>,
@@ -33,7 +46,7 @@ public extension View {
 
 // MARK: - Private Navigation Stack Wrapper
 
-/// Vista interna que envuelve NavigationStack con el binding correcto
+/// Internal view that wraps NavigationStack with the correct binding.
 private struct RouterNavigationStack<R: Route, Content: View, Destination: View>: View {
     @Bindable var router: Router<R>
     let content: Content

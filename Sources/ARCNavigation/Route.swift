@@ -7,9 +7,20 @@
 
 import SwiftUI
 
-/// Protocol que deben conformar todos los routes de la app
+/// A protocol that all app routes must conform to.
 ///
-/// Ejemplo de implementación:
+/// The `Route` protocol defines the contract for type-safe navigation destinations.
+/// Routes are typically implemented as enums with associated values to pass data
+/// between screens.
+///
+/// ## Overview
+///
+/// Implement this protocol by creating an enum where each case represents
+/// a navigation destination. The `view()` method returns the corresponding
+/// SwiftUI view for each route.
+///
+/// ## Example
+///
 /// ```swift
 /// enum AppRoute: Route {
 ///     case home
@@ -29,10 +40,20 @@ import SwiftUI
 ///     }
 /// }
 /// ```
+///
+/// ## Topics
+///
+/// ### Creating Routes
+/// - ``view()``
 @MainActor
 public protocol Route: Hashable {
     associatedtype Destination: View
 
-    /// Retorna la vista correspondiente a esta ruta
+    /// Returns the view corresponding to this route.
+    ///
+    /// Implement this method to provide the destination view for each route case.
+    /// Use a switch statement to handle all cases and return the appropriate view.
+    ///
+    /// - Returns: The SwiftUI view for this route.
     @ViewBuilder func view() -> Destination
 }

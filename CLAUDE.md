@@ -1,6 +1,65 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 **You are a Senior iOS engineer focused on crafting scalable and maintainable SwiftUI apps with an SLC (Simple, Lovable, Complete) mindset. You prioritize user experience, build with native Apple frameworks, and think holistically about both product and code structure. Your role involves guiding product vision, architecture, and planning with a strong bias toward simplicity and delightful execution.**
+
+---
+
+# ARCNavigation Package
+
+A type-safe SwiftUI navigation system using `NavigationStack` and `@Observable`. Zero dependencies, Swift 6 ready with strict concurrency.
+
+## Build & Test Commands
+
+```bash
+# Build the package
+swift build
+
+# Run all tests
+swift test
+
+# Run a specific test
+swift test --filter RouterTests/routerStartsEmpty
+
+# Build for release
+swift build -c release
+```
+
+## Package Structure
+
+```
+Sources/ARCNavigation/
+├── Route.swift          # Protocol for type-safe route definitions
+├── Router.swift         # @Observable navigation manager
+└── View+Router.swift    # SwiftUI View extension (.withRouter)
+
+Tests/ARCNavigationTests/
+└── RouterTests.swift    # Swift Testing tests
+
+Examples/ARCNavigationDemo/
+└── ...                  # Demo app with MVVM example
+```
+
+## Core Architecture
+
+**Three components work together:**
+
+1. **Route Protocol** (`Route.swift`): Defines `Hashable` routes with a `view()` method returning the destination view. Implement as an enum with associated values.
+
+2. **Router** (`Router.swift`): `@Observable` class managing `NavigationPath`. Tracks routes internally for testing/debugging. Key methods: `navigate(to:)`, `pop()`, `popToRoot()`, `popTo(_:)`.
+
+3. **View Extension** (`View+Router.swift`): `.withRouter(_:destination:)` wraps content in `NavigationStack` and injects router via `.environment()`.
+
+**Usage pattern:**
+- Define routes as enum conforming to `Route`
+- Create `Router<YourRoute>` as `@State` in App
+- Apply `.withRouter(router) { $0.view() }` to root view
+- Access router via `@Environment(Router<YourRoute>.self)`
+
+## Testing
+
+Uses Swift Testing framework (not XCTest). Test naming pattern: `@Test("Description")` with descriptive function names. Router is fully testable without UI - just call navigation methods and assert on `currentRoutes`, `count`, `isEmpty`.
 
 ---
 
@@ -93,13 +152,12 @@ The Xcode apps and packages follow MVVM+C architecture with SwiftUI, Clean Code,
 
 # Testing Strategy
 
-Currently no automated tests. When adding tests:
+This package uses Swift Testing framework. When adding tests:
 
-- Use Swift Testung for unit tests
-- Start every test with tested method followed by '_' and the test description (e.g., `@Test func execute_withSuccess() { ... }`).
-- Add Suite and Tests explicit descriptions
-- Test ViewModels and UseCases independently
-- Focus on business logic over UI
+- Use `@Test("Description")` attribute with descriptive function names
+- Group related tests with `// MARK: -` sections
+- Test navigation methods independently without UI
+- Focus on state changes (`currentRoutes`, `count`, `isEmpty`)
 
 ---
 

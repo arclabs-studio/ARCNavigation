@@ -5,6 +5,7 @@
 //  Created by ARC Labs Studio on 2025-11-13.
 //
 
+import ARCLogger
 import SwiftUI
 
 /// A centralized router for managing type-safe navigation in SwiftUI.
@@ -35,6 +36,15 @@ import SwiftUI
 /// router.popToRoot()
 /// ```
 ///
+/// ## Logging
+///
+/// The router includes optional logging via ARCLogger. Enable logging
+/// by setting `loggingEnabled` to `true`:
+///
+/// ```swift
+/// let router = Router<AppRoute>(loggingEnabled: true)
+/// ```
+///
 /// ## Topics
 ///
 /// ### Navigation
@@ -48,9 +58,23 @@ import SwiftUI
 /// - ``isEmpty``
 /// - ``count``
 /// - ``path``
+///
+/// ### Configuration
+/// - ``loggingEnabled``
 @Observable
 public final class Router<R: Route> {
-    // MARK: Properties
+    // MARK: Private Properties
+
+    /// Internal array for route tracking (useful for debugging and testing).
+    private var routes: [R] = []
+
+    /// Logger instance for navigation operations.
+    private let logger = ARCLogger(
+        subsystem: "studio.arclabs.ARCNavigation",
+        category: "Router"
+    )
+
+    // MARK: Public Properties
 
     /// The navigation path that manages the navigation stack.
     ///
@@ -58,15 +82,22 @@ public final class Router<R: Route> {
     /// the current navigation state.
     public var path = NavigationPath()
 
-    /// Internal array for route tracking (useful for debugging and testing).
-    private var routes: [R] = []
+    /// Enables or disables logging for navigation operations.
+    ///
+    /// When enabled, the router logs navigation events using ARCLogger.
+    /// Defaults to `false` to minimize console output.
+    public var loggingEnabled: Bool
 
     // MARK: Initialization
 
     /// Creates a new router instance.
     ///
     /// The router starts with an empty navigation stack.
-    public init() {}
+    ///
+    /// - Parameter loggingEnabled: Whether to log navigation operations. Defaults to `false`.
+    public init(loggingEnabled: Bool = false) {
+        self.loggingEnabled = loggingEnabled
+    }
 
     // MARK: Core Navigation
 
@@ -85,6 +116,13 @@ public final class Router<R: Route> {
     public func navigate(to route: R) {
         routes.append(route)
         path.append(route)
+
+        if loggingEnabled {
+            logger.debug("Navigated to route", metadata: [
+                "route": .public(String(describing: route)),
+                "stackSize": .public(String(routes.count))
+            ])
+        }
     }
 
     /// Pops the current screen from the navigation stack.
@@ -98,9 +136,22 @@ public final class Router<R: Route> {
     /// router.pop()
     /// ```
     public func pop() {
-        guard !routes.isEmpty else { return }
-        routes.removeLast()
+        guard !routes.isEmpty else {
+            if loggingEnabled {
+                logger.warning("Pop called on empty stack")
+            }
+            return
+        }
+
+        let poppedRoute = routes.removeLast()
         path.removeLast()
+
+        if loggingEnabled {
+            logger.debug("Popped route", metadata: [
+                "route": .public(String(describing: poppedRoute)),
+                "stackSize": .public(String(routes.count))
+            ])
+        }
     }
 
     /// Pops all screens and returns to the root view.
@@ -114,8 +165,15 @@ public final class Router<R: Route> {
     /// router.popToRoot()
     /// ```
     public func popToRoot() {
+        let previousCount = routes.count
         routes.removeAll()
         path.removeLast(path.count)
+
+        if loggingEnabled {
+            logger.debug("Popped to root", metadata: [
+                "routesRemoved": .public(String(previousCount))
+            ])
+        }
     }
 
     /// Pops screens until reaching a specific route.
@@ -135,10 +193,26 @@ public final class Router<R: Route> {
     /// router.popTo(.home)  // Pops settings and profile
     /// ```
     public func popTo(_ route: R) {
-        guard let index = routes.firstIndex(of: route) else { return }
+        guard let index = routes.firstIndex(of: route) else {
+            if loggingEnabled {
+                logger.warning("PopTo failed: route not in stack", metadata: [
+                    "targetRoute": .public(String(describing: route))
+                ])
+            }
+            return
+        }
+
         let countToRemove = routes.count - index - 1
         routes.removeLast(countToRemove)
         path.removeLast(countToRemove)
+
+        if loggingEnabled {
+            logger.debug("Popped to route", metadata: [
+                "targetRoute": .public(String(describing: route)),
+                "routesRemoved": .public(String(countToRemove)),
+                "stackSize": .public(String(routes.count))
+            ])
+        }
     }
 
     // MARK: Testing & Debugging Helpers

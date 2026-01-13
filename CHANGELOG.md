@@ -11,9 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ARCDevTools integration with SwiftLint and SwiftFormat configurations
 - Documentation.docc catalog for API documentation
 - GitHub Actions CI/CD workflow
+- ARCLogger integration for optional navigation logging
+- `loggingEnabled` property in `Router` to enable/disable logging
+- Structured logging with metadata for navigation events
 
 ### Changed
 - Refactored `withRouter` to use `@Bindable` wrapper for Swift 6 strict concurrency compliance
+- Updated ARCDevTools submodule to v1.6.0
 
 ## [1.0.0] - 2025-01-01
 

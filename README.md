@@ -7,7 +7,7 @@
 
 **A type-safe, testable SwiftUI navigation system for modern iOS apps.**
 
-Type-Safe Routes • Observable State • Fully Testable • Zero Dependencies • Swift 6 Ready
+Type-Safe Routes • Observable State • Fully Testable • Built-in Logging • Swift 6 Ready
 
 ---
 
@@ -22,7 +22,7 @@ Built with Swift 6 and strict concurrency compliance, ARCNavigation integrates s
 - ✅ **Type-Safe Navigation** - Define routes as enum cases with associated values
 - ✅ **Observable State** - Uses `@Observable` for efficient SwiftUI integration
 - ✅ **Fully Testable** - Test navigation flows without UI, using simple assertions
-- ✅ **Zero Dependencies** - Pure Swift and SwiftUI, no external dependencies
+- ✅ **Built-in Logging** - Optional structured logging via ARCLogger
 - ✅ **Swift 6 Ready** - Built with strict concurrency compliance
 
 ---
@@ -128,6 +128,23 @@ let isEmpty = router.isEmpty
 let count = router.count
 let routes = router.currentRoutes
 ```
+
+### Logging
+
+Enable optional logging to debug navigation flows:
+
+```swift
+// Enable logging when creating the router
+@State private var router = Router<AppRoute>(loggingEnabled: true)
+
+// Or toggle at runtime
+router.loggingEnabled = true
+```
+
+When enabled, the router logs navigation events with structured metadata:
+- Navigation pushes and pops
+- Stack size changes
+- Warnings for edge cases (e.g., pop on empty stack)
 
 ---
 
@@ -275,6 +292,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🔗 Related Resources
 
+- **[ARCLogger](https://github.com/arclabs-studio/ARCLogger)** - Privacy-conscious structured logging
 - **[ARCKnowledge](https://github.com/arclabs-studio/ARCKnowledge)** - Development standards and guidelines
 - **[ARCDevTools](https://github.com/arclabs-studio/ARCDevTools)** - Quality tooling and automation
 

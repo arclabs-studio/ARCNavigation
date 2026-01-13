@@ -26,13 +26,25 @@ let package = Package(
         // Note: Demo app is a standalone Xcode project in Example/ folder
     ],
 
+    // MARK: - Dependencies
+
+    dependencies: [
+        .package(url: "https://github.com/arclabs-studio/ARCLogger", from: "1.0.0")
+    ],
+
     // MARK: - Targets
 
     targets: [
         // Main library
         .target(
             name: "ARCNavigation",
-            path: "Sources/ARCNavigation"
+            dependencies: [
+                .product(name: "ARCLogger", package: "ARCLogger")
+            ],
+            path: "Sources/ARCNavigation",
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency")
+            ]
         ),
 
         // Tests

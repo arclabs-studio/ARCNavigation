@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-01-13
+
 ### Added
 - ARCDevTools integration with SwiftLint and SwiftFormat configurations
 - Documentation.docc catalog for API documentation

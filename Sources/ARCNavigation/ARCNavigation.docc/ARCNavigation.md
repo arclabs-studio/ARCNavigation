@@ -27,6 +27,16 @@ ARCNavigation provides a powerful yet simple navigation solution for SwiftUI app
 - ``Router``
 - ``Route``
 
+### Tab Navigation
+
+- ``NavigationTab``
+- ``TabRouter``
+
+### Coordinators
+
+- ``Coordinator``
+- ``TabCoordinator``
+
 ### Advanced Topics
 
 - <doc:AdvancedUsage>
@@ -35,3 +45,4 @@ ARCNavigation provides a powerful yet simple navigation solution for SwiftUI app
 ### Extension Methods
 
 - ``SwiftUI/View/withRouter(_:destination:)``
+- ``SwiftUI/View/withTabNavigation(_:for:destination:)``

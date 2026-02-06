@@ -14,6 +14,7 @@ struct HomeView: View {
     // MARK: - Properties
 
     @Environment(Router<AppRoute>.self) private var router
+    @Environment(TabRouter<AppTab, AppRoute>.self) private var tabRouter
 
     // MARK: - Body
 
@@ -22,6 +23,7 @@ struct HomeView: View {
             usersSection
             quickActionsSection
             stackInfoSection
+            tabInfoSection
         }
         .navigationTitle("ARCNavigation Demo")
     }
@@ -57,6 +59,17 @@ struct HomeView: View {
         Section("Navigation Stack") {
             LabeledContent("Stack Size", value: "\(router.count)")
             LabeledContent("Is Empty", value: router.isEmpty ? "Yes" : "No")
+        }
+    }
+
+    private var tabInfoSection: some View {
+        Section("Tab Router") {
+            LabeledContent("Active Tab", value: tabRouter.activeTab.title)
+            LabeledContent("Has Any Navigation", value: tabRouter.hasAnyNavigation ? "Yes" : "No")
+
+            ForEach(AppTab.allCases) { tab in
+                LabeledContent("\(tab.title) Depth", value: "\(tabRouter.depth(for: tab))")
+            }
         }
     }
 }
@@ -102,6 +115,7 @@ private struct UserRow: View {
         HomeView()
     }
     .environment(Router<AppRoute>())
+    .environment(TabRouter<AppTab, AppRoute>())
 }
 
 #Preview("Dark Mode") {
@@ -109,5 +123,6 @@ private struct UserRow: View {
         HomeView()
     }
     .environment(Router<AppRoute>())
+    .environment(TabRouter<AppTab, AppRoute>())
     .preferredColorScheme(.dark)
 }

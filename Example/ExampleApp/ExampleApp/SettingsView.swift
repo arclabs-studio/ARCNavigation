@@ -8,12 +8,13 @@
 import ARCNavigation
 import SwiftUI
 
-/// Settings screen demonstrating stack inspection.
+/// Settings screen demonstrating stack inspection and tab router controls.
 struct SettingsView: View {
 
     // MARK: - Properties
 
     @Environment(Router<AppRoute>.self) private var router
+    @Environment(TabRouter<AppTab, AppRoute>.self) private var tabRouter
 
     // MARK: - Body
 
@@ -22,6 +23,7 @@ struct SettingsView: View {
             actionsSection
             navigationSection
             debugSection
+            tabDebugSection
         }
         .navigationTitle("Settings")
     }
@@ -74,6 +76,21 @@ struct SettingsView: View {
         }
     }
 
+    private var tabDebugSection: some View {
+        Section("Tab Router Debug") {
+            LabeledContent("Has Any Navigation", value: tabRouter.hasAnyNavigation ? "Yes" : "No")
+
+            ForEach(AppTab.allCases) { tab in
+                LabeledContent("\(tab.title) Depth", value: "\(tabRouter.depth(for: tab))")
+            }
+
+            Button("Reset All Navigation") {
+                tabRouter.resetAll()
+            }
+            .foregroundStyle(.red)
+        }
+    }
+
     // MARK: - Helpers
 
     private func routeDescription(for route: AppRoute) -> String {
@@ -97,6 +114,7 @@ struct SettingsView: View {
         SettingsView()
     }
     .environment(Router<AppRoute>())
+    .environment(TabRouter<AppTab, AppRoute>())
 }
 
 #Preview("Dark Mode") {
@@ -104,5 +122,6 @@ struct SettingsView: View {
         SettingsView()
     }
     .environment(Router<AppRoute>())
+    .environment(TabRouter<AppTab, AppRoute>())
     .preferredColorScheme(.dark)
 }

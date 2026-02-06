@@ -9,22 +9,20 @@ import ARCNavigation
 import SwiftUI
 
 /// Main entry point for the ARCNavigation example application.
-/// Demonstrates type-safe navigation with Router and Route protocol.
+/// Demonstrates tab-based navigation with TabCoordinator pattern.
 @main
 struct ExampleAppApp: App {
 
     // MARK: - Properties
 
-    @State private var router = Router<AppRoute>()
+    @State private var coordinator = AppCoordinator()
 
     // MARK: - Body
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .withRouter(router) { route in
-                    route.view()
-                }
+            MainTabView()
+                .environment(coordinator)
         }
     }
 }

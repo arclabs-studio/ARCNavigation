@@ -43,7 +43,7 @@ import SwiftUI
 /// - ``makeView(for:)``
 @MainActor
 public protocol Coordinator: AnyObject, Observable {
-    associatedtype RouteType: Route // swiftlint:disable:this type_name
+    associatedtype RouteType: Route
     associatedtype RouteView: View
 
     /// Creates the destination view for a given route.

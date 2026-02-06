@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - View Extension
 
 public extension View {
-
     /// Configures tab-based navigation for a specific tab.
     ///
     /// This modifier wraps the view in a `NavigationStack` bound to the
@@ -63,7 +62,6 @@ private struct TabNavigationStack<
     Content: View,
     Destination: View
 >: View {
-
     @Bindable var tabRouter: TabRouter<Tab, R>
     let tab: Tab
     let content: Content

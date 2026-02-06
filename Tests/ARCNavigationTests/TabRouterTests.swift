@@ -13,7 +13,6 @@ import Testing
 @Suite("TabRouter")
 @MainActor
 struct TabRouterTests {
-
     // MARK: - Helpers
 
     private func makeSUT(initialTab: TestTab? = nil) -> TabRouter<TestTab, TestRoute> {

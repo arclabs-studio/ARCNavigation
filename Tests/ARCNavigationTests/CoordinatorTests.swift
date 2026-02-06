@@ -27,7 +27,6 @@ private final class MockCoordinator: TabCoordinator {
 @Suite("TabCoordinator")
 @MainActor
 struct CoordinatorTests {
-
     // MARK: - Helpers
 
     private func makeSUT() -> MockCoordinator {

@@ -43,14 +43,14 @@ import SwiftUI
 /// - ``makeView(for:)``
 @MainActor
 public protocol Coordinator: AnyObject, Observable {
-    associatedtype R: Route
+    associatedtype RouteType: Route // swiftlint:disable:this type_name
     associatedtype RouteView: View
 
     /// Creates the destination view for a given route.
     ///
     /// - Parameter route: The route to create a view for.
     /// - Returns: The SwiftUI view corresponding to the route.
-    @ViewBuilder func makeView(for route: R) -> RouteView
+    @ViewBuilder func makeView(for route: RouteType) -> RouteView
 }
 
 /// A coordinator that manages tab-based navigation.
@@ -94,19 +94,18 @@ public protocol TabCoordinator: Coordinator {
     associatedtype Tab: NavigationTab
 
     /// The tab router managing per-tab navigation stacks.
-    var tabRouter: TabRouter<Tab, R> { get }
+    var tabRouter: TabRouter<Tab, RouteType> { get }
 }
 
 // MARK: - TabCoordinator Default Implementations
 
 public extension TabCoordinator {
-
     /// Navigates to a route in the active tab.
     ///
     /// Delegates to ``TabRouter/navigate(to:)``.
     ///
     /// - Parameter route: The destination route.
-    func navigate(to route: R) {
+    func navigate(to route: RouteType) {
         tabRouter.navigate(to: route)
     }
 
@@ -117,7 +116,7 @@ public extension TabCoordinator {
     /// - Parameters:
     ///   - route: The destination route.
     ///   - tab: The tab to navigate in.
-    func navigate(to route: R, in tab: Tab) {
+    func navigate(to route: RouteType, in tab: Tab) {
         tabRouter.navigate(to: route, in: tab)
     }
 

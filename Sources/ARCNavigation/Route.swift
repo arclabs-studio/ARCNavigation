@@ -61,7 +61,6 @@ public protocol Route: Hashable {
 // MARK: - EmptyView Default
 
 public extension Route where Destination == EmptyView {
-
     /// Default implementation returning `EmptyView` for routes
     /// used with coordinators where view creation is delegated.
     func view() -> EmptyView {

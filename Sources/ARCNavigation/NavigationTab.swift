@@ -55,7 +55,6 @@ import Foundation
 @MainActor
 public protocol NavigationTab: Hashable, Identifiable, CaseIterable
 where AllCases: RandomAccessCollection {
-
     /// The display title for this tab.
     var title: String { get }
 
@@ -71,7 +70,6 @@ where AllCases: RandomAccessCollection {
 // MARK: - Default Implementations
 
 public extension NavigationTab {
-
     /// Default implementation returning `nil` (no badge).
     var badge: Int? { nil }
 }

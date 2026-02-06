@@ -67,7 +67,6 @@ import SwiftUI
 @Observable
 @MainActor
 public final class TabRouter<Tab: NavigationTab, R: Route> {
-
     // MARK: - Private Properties
 
     /// Per-tab routers, lazily created on first access.

@@ -20,6 +20,8 @@ Built with Swift 6 and strict concurrency compliance, ARCNavigation integrates s
 ### Key Features
 
 - ✅ **Type-Safe Navigation** - Define routes as enum cases with associated values
+- ✅ **Tab Navigation** - Per-tab navigation stacks with `TabRouter` and `NavigationTab`
+- ✅ **Coordinator Pattern** - Centralized route-to-view mapping with `Coordinator` protocol
 - ✅ **Observable State** - Uses `@Observable` for efficient SwiftUI integration
 - ✅ **Fully Testable** - Test navigation flows without UI, using simple assertions
 - ✅ **Built-in Logging** - Optional structured logging via ARCLogger
@@ -129,6 +131,67 @@ let count = router.count
 let routes = router.currentRoutes
 ```
 
+### Tab Navigation
+
+For apps with a `TabView`, use `TabRouter` to manage independent navigation stacks per tab:
+
+```swift
+import ARCNavigation
+
+// 1. Define your tabs
+enum AppTab: String, NavigationTab {
+    case home, explore, settings
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .home: "Home"
+        case .explore: "Explore"
+        case .settings: "Settings"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .home: "house"
+        case .explore: "magnifyingglass"
+        case .settings: "gearshape"
+        }
+    }
+}
+
+// 2. Create a TabRouter
+@State private var tabRouter = TabRouter<AppTab, AppRoute>()
+
+// 3. Use with TabView
+TabView(selection: tabRouter.activeTabBinding) {
+    ForEach(AppTab.allCases) { tab in
+        ContentView()
+            .withTabNavigation(tabRouter, for: tab) { $0.view() }
+            .tabItem { Label(tab.title, systemImage: tab.icon) }
+            .tag(tab)
+    }
+}
+```
+
+### Coordinator Pattern
+
+For more complex apps, use `TabCoordinator` to centralize view creation:
+
+```swift
+@Observable
+@MainActor
+final class AppCoordinator: TabCoordinator {
+    let tabRouter = TabRouter<AppTab, AppRoute>()
+
+    @ViewBuilder
+    func makeView(for route: AppRoute) -> some View {
+        route.view()
+    }
+}
+```
+
 ### Logging
 
 Enable optional logging to debug navigation flows:
@@ -154,15 +217,21 @@ When enabled, the router logs navigation events with structured metadata:
 ARCNavigation/
 ├── Sources/
 │   └── ARCNavigation/
-│       ├── Route.swift          # Protocol for type-safe route definitions
-│       ├── Router.swift         # @Observable navigation manager
-│       └── View+Router.swift    # SwiftUI View extension (.withRouter)
+│       ├── Route.swift            # Protocol for type-safe route definitions
+│       ├── Router.swift           # @Observable navigation manager
+│       ├── NavigationTab.swift    # Protocol for tab definitions
+│       ├── TabRouter.swift        # Per-tab navigation manager
+│       ├── Coordinator.swift      # Coordinator and TabCoordinator protocols
+│       ├── View+Router.swift      # SwiftUI View extension (.withRouter)
+│       └── View+TabRouter.swift   # SwiftUI View extension (.withTabNavigation)
 ├── Tests/
 │   └── ARCNavigationTests/
-│       └── RouterTests.swift    # Swift Testing tests
+│       ├── RouterTests.swift      # Router tests
+│       ├── TabRouterTests.swift   # TabRouter tests
+│       └── CoordinatorTests.swift # Coordinator tests
 ├── Example/
-│   └── ExampleApp/              # Standalone demo Xcode project
-└── Documentation.docc/          # DocC documentation
+│   └── ExampleApp/                # Standalone demo Xcode project
+└── Documentation.docc/            # DocC documentation
 ```
 
 ---
@@ -207,7 +276,11 @@ ARCNavigation follows a simple and scalable architecture:
 |-----------|-------------|
 | **Route** | Protocol defining routes with `Hashable` conformance and `view()` method |
 | **Router** | `@Observable` class managing `NavigationPath` and route tracking |
-| **View Extension** | `.withRouter(_:destination:)` for `NavigationStack` integration |
+| **NavigationTab** | Protocol for defining tabs with title, icon, and optional badge |
+| **TabRouter** | `@Observable` class managing per-tab `Router` instances |
+| **Coordinator** | Protocol for centralized route-to-view mapping |
+| **TabCoordinator** | Coordinator with `TabRouter` and default navigation methods |
+| **View Extensions** | `.withRouter()` and `.withTabNavigation()` for `NavigationStack` integration |
 
 For complete architecture guidelines, see [ARCKnowledge](https://github.com/arclabs-studio/ARCKnowledge).
 

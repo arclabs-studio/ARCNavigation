@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `NavigationTab` protocol for defining tabs with title, icon, and badge
+- `TabRouter` class for managing per-tab navigation stacks with search context
+- `Coordinator` protocol for centralized route-to-view mapping
+- `TabCoordinator` protocol with default navigation methods via `TabRouter`
+- `.withTabNavigation(_:for:destination:)` view extension for tab-based `NavigationStack`
+- `Route` default implementation returning `EmptyView` for coordinator-based routes
+- `TabRouter.activeTabBinding` for `TabView(selection:)` integration
+- `TabRouter.resetAll()` to clear all navigation stacks
+- Example app updated with tab-based navigation using `AppTab`, `AppCoordinator`, and `MainTabView`
+
 ## [1.1.0] - 2026-01-13
 
 ### Added

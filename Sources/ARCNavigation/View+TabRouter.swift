@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - View Extension
 
-public extension View {
+extension View {
     /// Configures tab-based navigation for a specific tab.
     ///
     /// This modifier wraps the view in a `NavigationStack` bound to the
@@ -39,29 +39,24 @@ public extension View {
     ///     }
     /// }
     /// ```
-    func withTabNavigation<Tab: NavigationTab, R: Route>(
-        _ tabRouter: TabRouter<Tab, R>,
-        for tab: Tab,
-        @ViewBuilder destination: @escaping (R) -> some View
-    ) -> some View {
-        TabNavigationStack(
-            tabRouter: tabRouter,
-            tab: tab,
-            content: self,
-            destination: destination
-        )
+    public func withTabNavigation<Tab: NavigationTab, R: Route>(_ tabRouter: TabRouter<Tab, R>,
+                                                                for tab: Tab,
+                                                                @ViewBuilder destination: @escaping (R) -> some View)
+    -> some View {
+        TabNavigationStack(tabRouter: tabRouter,
+                           tab: tab,
+                           content: self,
+                           destination: destination)
     }
 }
 
 // MARK: - Private Navigation Stack Wrapper
 
 /// Internal view that wraps NavigationStack with the correct per-tab binding.
-private struct TabNavigationStack<
-    Tab: NavigationTab,
+private struct TabNavigationStack<Tab: NavigationTab,
     R: Route,
     Content: View,
-    Destination: View
->: View {
+    Destination: View>: View {
     @Bindable var tabRouter: TabRouter<Tab, R>
     let tab: Tab
     let content: Content

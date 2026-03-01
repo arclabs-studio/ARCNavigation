@@ -12,12 +12,10 @@ import Testing
 // MARK: - Mock Coordinator
 
 @Observable
-@MainActor
-private final class MockCoordinator: TabCoordinator {
+@MainActor private final class MockCoordinator: TabCoordinator {
     let tabRouter = TabRouter<TestTab, TestRoute>()
 
-    @ViewBuilder
-    func makeView(for route: TestRoute) -> some View {
+    func makeView(for _: TestRoute) -> some View {
         EmptyView()
     }
 }
@@ -25,8 +23,7 @@ private final class MockCoordinator: TabCoordinator {
 // MARK: - TabCoordinator Tests
 
 @Suite("TabCoordinator")
-@MainActor
-struct CoordinatorTests {
+@MainActor struct CoordinatorTests {
     // MARK: - Helpers
 
     private func makeSUT() -> MockCoordinator {
@@ -35,8 +32,7 @@ struct CoordinatorTests {
 
     // MARK: - Default Navigation
 
-    @Test("Navigate delegates to tabRouter")
-    func navigateDelegatesToTabRouter() {
+    @Test("Navigate delegates to tabRouter") func navigateDelegatesToTabRouter() {
         let sut = makeSUT()
 
         sut.navigate(to: .page1)
@@ -45,8 +41,7 @@ struct CoordinatorTests {
         #expect(sut.tabRouter.activeRouter.currentRoutes == [.page1])
     }
 
-    @Test("Pop delegates to tabRouter")
-    func popDelegatesToTabRouter() {
+    @Test("Pop delegates to tabRouter") func popDelegatesToTabRouter() {
         let sut = makeSUT()
         sut.navigate(to: .page1)
         sut.navigate(to: .page2)
@@ -56,8 +51,7 @@ struct CoordinatorTests {
         #expect(sut.tabRouter.activeRouter.count == 1)
     }
 
-    @Test("PopToRoot delegates to tabRouter")
-    func popToRootDelegatesToTabRouter() {
+    @Test("PopToRoot delegates to tabRouter") func popToRootDelegatesToTabRouter() {
         let sut = makeSUT()
         sut.navigate(to: .page1)
         sut.navigate(to: .page2)
@@ -67,8 +61,7 @@ struct CoordinatorTests {
         #expect(sut.tabRouter.activeRouter.isEmpty)
     }
 
-    @Test("Navigate in specific tab delegates to tabRouter")
-    func navigateInSpecificTabDelegatesToTabRouter() {
+    @Test("Navigate in specific tab delegates to tabRouter") func navigateInSpecificTabDelegatesToTabRouter() {
         let sut = makeSUT()
 
         sut.navigate(to: .detail(id: 1), in: .explore)

@@ -41,8 +41,7 @@ import SwiftUI
 ///
 /// ### View Creation
 /// - ``makeView(for:)``
-@MainActor
-public protocol Coordinator: AnyObject, Observable {
+@MainActor public protocol Coordinator: AnyObject, Observable {
     associatedtype RouteType: Route
     associatedtype RouteView: View
 
@@ -89,8 +88,7 @@ public protocol Coordinator: AnyObject, Observable {
 /// - ``navigate(to:in:)``
 /// - ``pop()``
 /// - ``popToRoot()``
-@MainActor
-public protocol TabCoordinator: Coordinator {
+@MainActor public protocol TabCoordinator: Coordinator {
     associatedtype Tab: NavigationTab
 
     /// The tab router managing per-tab navigation stacks.
@@ -99,13 +97,13 @@ public protocol TabCoordinator: Coordinator {
 
 // MARK: - TabCoordinator Default Implementations
 
-public extension TabCoordinator {
+extension TabCoordinator {
     /// Navigates to a route in the active tab.
     ///
     /// Delegates to ``TabRouter/navigate(to:)``.
     ///
     /// - Parameter route: The destination route.
-    func navigate(to route: RouteType) {
+    public func navigate(to route: RouteType) {
         tabRouter.navigate(to: route)
     }
 
@@ -116,21 +114,21 @@ public extension TabCoordinator {
     /// - Parameters:
     ///   - route: The destination route.
     ///   - tab: The tab to navigate in.
-    func navigate(to route: RouteType, in tab: Tab) {
+    public func navigate(to route: RouteType, in tab: Tab) {
         tabRouter.navigate(to: route, in: tab)
     }
 
     /// Pops the top route from the active context.
     ///
     /// Delegates to ``TabRouter/pop()``.
-    func pop() {
+    public func pop() {
         tabRouter.pop()
     }
 
     /// Pops to the root of the active context.
     ///
     /// Delegates to ``TabRouter/popToRoot()``.
-    func popToRoot() {
+    public func popToRoot() {
         tabRouter.popToRoot()
     }
 }

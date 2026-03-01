@@ -65,8 +65,7 @@ import SwiftUI
 /// ### Configuration
 /// - ``loggingEnabled``
 @Observable
-@MainActor
-public final class TabRouter<Tab: NavigationTab, R: Route> {
+@MainActor public final class TabRouter<Tab: NavigationTab, R: Route> {
     // MARK: - Private Properties
 
     /// Per-tab routers, lazily created on first access.
@@ -76,10 +75,8 @@ public final class TabRouter<Tab: NavigationTab, R: Route> {
     private var searchRouter: Router<R>
 
     /// Logger instance for tab navigation operations.
-    private let logger = ARCLogger(
-        subsystem: "studio.arclabs.ARCNavigation",
-        category: "TabRouter"
-    )
+    private let logger = ARCLogger(subsystem: "studio.arclabs.ARCNavigation",
+                                   category: "TabRouter")
 
     // MARK: - Public Properties
 
@@ -87,7 +84,7 @@ public final class TabRouter<Tab: NavigationTab, R: Route> {
     public var activeTab: Tab
 
     /// Whether the search context is currently active.
-    public var isSearchActive: Bool = false
+    public var isSearchActive = false
 
     /// Enables or disables logging for all managed routers.
     ///
@@ -113,9 +110,9 @@ public final class TabRouter<Tab: NavigationTab, R: Route> {
         guard let tab = initialTab ?? Tab.allCases.first else {
             preconditionFailure("NavigationTab must have at least one case")
         }
-        self.activeTab = tab
+        activeTab = tab
         self.loggingEnabled = loggingEnabled
-        self.searchRouter = Router<R>(loggingEnabled: loggingEnabled)
+        searchRouter = Router<R>(loggingEnabled: loggingEnabled)
     }
 
     // MARK: - Router Access
@@ -163,10 +160,8 @@ public final class TabRouter<Tab: NavigationTab, R: Route> {
 
         if loggingEnabled {
             let context = isSearchActive ? "search" : String(describing: activeTab)
-            logger.debug("Navigated to route", metadata: [
-                "route": .public(String(describing: route)),
-                "context": .public(context)
-            ])
+            logger.debug("Navigated to route", metadata: ["route": .public(String(describing: route)),
+                                                          "context": .public(context)])
         }
     }
 
@@ -184,10 +179,8 @@ public final class TabRouter<Tab: NavigationTab, R: Route> {
         router(for: tab).navigate(to: route)
 
         if loggingEnabled {
-            logger.debug("Navigated to route in tab", metadata: [
-                "route": .public(String(describing: route)),
-                "tab": .public(String(describing: tab))
-            ])
+            logger.debug("Navigated to route in tab", metadata: ["route": .public(String(describing: route)),
+                                                                 "tab": .public(String(describing: tab))])
         }
     }
 
@@ -275,18 +268,14 @@ public final class TabRouter<Tab: NavigationTab, R: Route> {
     /// Use this binding with `TabView(selection:)` to automatically
     /// deactivate the search context when the user switches tabs.
     public var activeTabBinding: Binding<Tab> {
-        Binding(
-            get: { self.activeTab },
-            set: { newTab in
-                self.activeTab = newTab
-                self.isSearchActive = false
+        Binding(get: { self.activeTab },
+                set: { newTab in
+                    self.activeTab = newTab
+                    self.isSearchActive = false
 
-                if self.loggingEnabled {
-                    self.logger.debug("Switched tab", metadata: [
-                        "tab": .public(String(describing: newTab))
-                    ])
-                }
-            }
-        )
+                    if self.loggingEnabled {
+                        self.logger.debug("Switched tab", metadata: ["tab": .public(String(describing: newTab))])
+                    }
+                })
     }
 }

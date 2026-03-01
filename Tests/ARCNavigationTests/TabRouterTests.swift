@@ -11,8 +11,7 @@ import Testing
 // MARK: - TabRouter Tests
 
 @Suite("TabRouter")
-@MainActor
-struct TabRouterTests {
+@MainActor struct TabRouterTests {
     // MARK: - Helpers
 
     private func makeSUT(initialTab: TestTab? = nil) -> TabRouter<TestTab, TestRoute> {
@@ -21,8 +20,7 @@ struct TabRouterTests {
 
     // MARK: - Initial State
 
-    @Test("Starts with first tab as active")
-    func initialStateDefaultTab() {
+    @Test("Starts with first tab as active") func initialStateDefaultTab() {
         let sut = makeSUT()
 
         #expect(sut.activeTab == .home)
@@ -30,8 +28,7 @@ struct TabRouterTests {
         #expect(sut.hasAnyNavigation == false)
     }
 
-    @Test("Starts with custom initial tab")
-    func initialStateCustomTab() {
+    @Test("Starts with custom initial tab") func initialStateCustomTab() {
         let sut = makeSUT(initialTab: .settings)
 
         #expect(sut.activeTab == .settings)
@@ -39,8 +36,7 @@ struct TabRouterTests {
 
     // MARK: - Navigation
 
-    @Test("Navigate pushes to active tab only")
-    func navigateToActiveTab() {
+    @Test("Navigate pushes to active tab only") func navigateToActiveTab() {
         let sut = makeSUT()
 
         sut.navigate(to: .page1)
@@ -50,8 +46,7 @@ struct TabRouterTests {
         #expect(sut.depth(for: .explore) == 0)
     }
 
-    @Test("Navigate to specific tab switches and pushes")
-    func navigateToSpecificTab() {
+    @Test("Navigate to specific tab switches and pushes") func navigateToSpecificTab() {
         let sut = makeSUT()
 
         sut.navigate(to: .page1, in: .explore)
@@ -61,8 +56,7 @@ struct TabRouterTests {
         #expect(sut.depth(for: .home) == 0)
     }
 
-    @Test("Navigate in search context when search is active")
-    func navigateInSearchContext() {
+    @Test("Navigate in search context when search is active") func navigateInSearchContext() {
         let sut = makeSUT()
         sut.isSearchActive = true
 
@@ -74,8 +68,7 @@ struct TabRouterTests {
 
     // MARK: - Pop
 
-    @Test("Pop removes from active tab")
-    func popFromActiveTab() {
+    @Test("Pop removes from active tab") func popFromActiveTab() {
         let sut = makeSUT()
         sut.navigate(to: .page1)
         sut.navigate(to: .page2)
@@ -85,8 +78,7 @@ struct TabRouterTests {
         #expect(sut.depth(for: .home) == 1)
     }
 
-    @Test("PopToRoot clears active tab only")
-    func popToRootClearsActiveTab() {
+    @Test("PopToRoot clears active tab only") func popToRootClearsActiveTab() {
         let sut = makeSUT()
 
         // Push to home tab
@@ -105,8 +97,7 @@ struct TabRouterTests {
 
     // MARK: - Tab Isolation
 
-    @Test("Tabs have independent navigation stacks")
-    func tabIsolation() {
+    @Test("Tabs have independent navigation stacks") func tabIsolation() {
         let sut = makeSUT()
 
         // Push to home
@@ -124,8 +115,7 @@ struct TabRouterTests {
 
     // MARK: - Depth
 
-    @Test("Depth tracks per-tab navigation count")
-    func depthTracking() {
+    @Test("Depth tracks per-tab navigation count") func depthTracking() {
         let sut = makeSUT()
 
         #expect(sut.depth(for: .home) == 0)
@@ -138,8 +128,7 @@ struct TabRouterTests {
 
     // MARK: - Reset
 
-    @Test("ResetAll clears all tabs and search")
-    func resetAll() {
+    @Test("ResetAll clears all tabs and search") func resetAll() {
         let sut = makeSUT()
 
         // Push to multiple tabs
@@ -159,8 +148,7 @@ struct TabRouterTests {
 
     // MARK: - Binding
 
-    @Test("ActiveTabBinding clears search on tab switch")
-    func activeTabBindingClearsSearch() {
+    @Test("ActiveTabBinding clears search on tab switch") func activeTabBindingClearsSearch() {
         let sut = makeSUT()
         sut.isSearchActive = true
 
@@ -170,8 +158,7 @@ struct TabRouterTests {
         #expect(sut.isSearchActive == false)
     }
 
-    @Test("Navigate in tab clears search flag")
-    func navigateInTabClearsSearch() {
+    @Test("Navigate in tab clears search flag") func navigateInTabClearsSearch() {
         let sut = makeSUT()
         sut.isSearchActive = true
 

@@ -18,7 +18,9 @@ enum TestTab: String, NavigationTab, CaseIterable {
 
     // MARK: - NavigationTab
 
-    nonisolated var id: String { rawValue }
+    nonisolated var id: String {
+        rawValue
+    }
 
     var title: String {
         switch self {

@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - View Extension
 
-public extension View {
+extension View {
     /// Configures the navigation router for this view hierarchy.
     ///
     /// This modifier wraps the view in a `NavigationStack` and injects the
@@ -36,10 +36,8 @@ public extension View {
     ///     }
     /// }
     /// ```
-    func withRouter<R: Route>(
-        _ router: Router<R>,
-        @ViewBuilder destination: @escaping (R) -> some View
-    ) -> some View {
+    public func withRouter<R: Route>(_ router: Router<R>,
+                                     @ViewBuilder destination: @escaping (R) -> some View) -> some View {
         RouterNavigationStack(router: router, content: self, destination: destination)
     }
 }

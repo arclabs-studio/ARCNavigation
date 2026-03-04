@@ -41,7 +41,8 @@ import SwiftUI
 ///
 /// ### View Creation
 /// - ``makeView(for:)``
-@MainActor public protocol Coordinator: AnyObject, Observable {
+@MainActor
+public protocol Coordinator: AnyObject, Observable {
     associatedtype RouteType: Route
     associatedtype RouteView: View
 
@@ -88,7 +89,8 @@ import SwiftUI
 /// - ``navigate(to:in:)``
 /// - ``pop()``
 /// - ``popToRoot()``
-@MainActor public protocol TabCoordinator: Coordinator {
+@MainActor
+public protocol TabCoordinator: Coordinator {
     associatedtype Tab: NavigationTab
 
     /// The tab router managing per-tab navigation stacks.

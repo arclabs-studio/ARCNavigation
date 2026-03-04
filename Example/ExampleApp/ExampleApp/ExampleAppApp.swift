@@ -12,7 +12,6 @@ import SwiftUI
 /// Demonstrates tab-based navigation with TabCoordinator pattern.
 @main
 struct ExampleAppApp: App {
-
     // MARK: - Properties
 
     @State private var coordinator = AppCoordinator()

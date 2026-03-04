@@ -3,61 +3,44 @@
 
 import PackageDescription
 
-let package = Package(
-    name: "ARCNavigation",
+let package = Package(name: "ARCNavigation",
 
-    // MARK: - Platforms
+                      // MARK: - Platforms
 
-    platforms: [
-        .iOS(.v17),
-        .macOS(.v14),
-        .tvOS(.v17),
-        .watchOS(.v10)
-    ],
+                      platforms: [.iOS(.v17),
+                                  .macOS(.v14),
+                                  .tvOS(.v17),
+                                  .watchOS(.v10)],
 
-    // MARK: - Products
-    // Only export the main library - Demo is NOT included
+                      // MARK: - Products
 
-    products: [
-        .library(
-            name: "ARCNavigation",
-            targets: ["ARCNavigation"]
-        )
-        // Note: Demo app is a standalone Xcode project in Example/ folder
-    ],
+                      // Only export the main library - Demo is NOT included
 
-    // MARK: - Dependencies
+                      products: [.library(name: "ARCNavigation",
+                                          targets: ["ARCNavigation"])
+                          // Note: Demo app is a standalone Xcode project in Example/ folder
+                      ],
 
-    dependencies: [
-        .package(url: "https://github.com/arclabs-studio/ARCLogger", from: "1.0.0")
-    ],
+                      // MARK: - Dependencies
 
-    // MARK: - Targets
+                      dependencies: [.package(url: "https://github.com/arclabs-studio/ARCLogger", from: "1.0.0")],
 
-    targets: [
-        // Main library
-        .target(
-            name: "ARCNavigation",
-            dependencies: [
-                .product(name: "ARCLogger", package: "ARCLogger")
-            ],
-            path: "Sources/ARCNavigation",
-            swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency")
-            ]
-        ),
+                      // MARK: - Targets
 
-        // Tests
-        .testTarget(
-            name: "ARCNavigationTests",
-            dependencies: ["ARCNavigation"],
-            path: "Tests/ARCNavigationTests"
-        )
-        // Note: Demo apps are standalone Xcode projects in Example/ folder
-        // NOT executable targets in Package.swift
-    ],
+                      targets: [// Main library
+                          .target(name: "ARCNavigation",
+                                  dependencies: [.product(name: "ARCLogger", package: "ARCLogger")],
+                                  path: "Sources/ARCNavigation",
+                                  swiftSettings: [.enableExperimentalFeature("StrictConcurrency")]),
 
-    // MARK: - Swift Language
+                          // Tests
+                          .testTarget(name: "ARCNavigationTests",
+                                      dependencies: ["ARCNavigation"],
+                                      path: "Tests/ARCNavigationTests")
+                          // Note: Demo apps are standalone Xcode projects in Example/ folder
+                          // NOT executable targets in Package.swift
+                      ],
 
-    swiftLanguageModes: [.v6]
-)
+                      // MARK: - Swift Language
+
+                      swiftLanguageModes: [.v6])

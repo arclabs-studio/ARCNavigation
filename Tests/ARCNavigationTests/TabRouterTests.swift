@@ -11,7 +11,8 @@ import Testing
 // MARK: - TabRouter Tests
 
 @Suite("TabRouter")
-@MainActor struct TabRouterTests {
+@MainActor
+struct TabRouterTests {
     // MARK: - Helpers
 
     private func makeSUT(initialTab: TestTab? = nil) -> TabRouter<TestTab, TestRoute> {

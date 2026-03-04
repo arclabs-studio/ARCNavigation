@@ -9,7 +9,6 @@ import Foundation
 
 /// Sample user entity for demonstration purposes.
 struct User: Identifiable, Hashable {
-
     // MARK: - Properties
 
     let id: UUID
@@ -28,7 +27,6 @@ struct User: Identifiable, Hashable {
 // MARK: - Sample Data
 
 extension User {
-
     static let alice = User(name: "Alice Johnson", email: "alice@example.com")
     static let bob = User(name: "Bob Smith", email: "bob@example.com")
     static let charlie = User(name: "Charlie Brown", email: "charlie@example.com")

@@ -13,14 +13,12 @@ import SwiftUI
 @Observable
 @MainActor
 final class AppCoordinator: TabCoordinator {
-
     // MARK: - Properties
 
     let tabRouter = TabRouter<AppTab, AppRoute>(initialTab: .home)
 
     // MARK: - TabCoordinator
 
-    @ViewBuilder
     func makeView(for route: AppRoute) -> some View {
         route.view()
     }

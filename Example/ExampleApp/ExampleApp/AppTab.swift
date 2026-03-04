@@ -16,7 +16,9 @@ enum AppTab: String, NavigationTab {
 
     // MARK: - NavigationTab
 
-    nonisolated var id: String { rawValue }
+    nonisolated var id: String {
+        rawValue
+    }
 
     var title: String {
         switch self {

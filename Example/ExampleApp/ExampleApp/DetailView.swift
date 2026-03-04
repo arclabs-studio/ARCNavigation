@@ -10,7 +10,6 @@ import SwiftUI
 
 /// Detail screen demonstrating recursive navigation.
 struct DetailView: View {
-
     // MARK: - Properties
 
     let id: Int

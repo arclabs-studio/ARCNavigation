@@ -52,7 +52,8 @@ import SwiftUI
 /// - ``title``
 /// - ``icon``
 /// - ``badge``
-@MainActor public protocol NavigationTab: Hashable, Identifiable, CaseIterable
+@MainActor
+public protocol NavigationTab: Hashable, Identifiable, CaseIterable
 where AllCases: RandomAccessCollection {
     /// The display title for this tab.
     ///

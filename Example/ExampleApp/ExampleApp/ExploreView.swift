@@ -10,7 +10,6 @@ import SwiftUI
 
 /// Explore tab root view demonstrating navigation within a specific tab.
 struct ExploreView: View {
-
     // MARK: - Properties
 
     @Environment(Router<AppRoute>.self) private var router
@@ -28,7 +27,7 @@ struct ExploreView: View {
 
     private var itemsSection: some View {
         Section("Items") {
-            ForEach(1...10, id: \.self) { id in
+            ForEach(1 ... 10, id: \.self) { id in
                 Button {
                     router.navigate(to: .detail(id: id))
                 } label: {

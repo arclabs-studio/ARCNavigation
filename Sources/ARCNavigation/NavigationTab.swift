@@ -5,7 +5,7 @@
 //  Created by ARC Labs Studio on 2026-02-06.
 //
 
-import Foundation
+import SwiftUI
 
 /// A protocol that defines a tab in a tab-based navigation system.
 ///
@@ -28,7 +28,7 @@ import Foundation
 ///
 ///     var id: String { rawValue }
 ///
-///     var title: String {
+///     var title: LocalizedStringKey {
 ///         switch self {
 ///         case .home: "Home"
 ///         case .explore: "Explore"
@@ -55,7 +55,10 @@ import Foundation
 @MainActor public protocol NavigationTab: Hashable, Identifiable, CaseIterable
 where AllCases: RandomAccessCollection {
     /// The display title for this tab.
-    var title: String { get }
+    ///
+    /// Using `LocalizedStringKey` ensures titles respond to
+    /// `.environment(\.locale, ...)` and the String Catalog.
+    var title: LocalizedStringKey { get }
 
     /// The SF Symbol name for this tab's icon.
     var icon: String { get }

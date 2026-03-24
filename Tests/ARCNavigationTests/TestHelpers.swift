@@ -22,7 +22,7 @@ enum TestTab: String, NavigationTab, CaseIterable {
         rawValue
     }
 
-    var title: String {
+    var title: LocalizedStringKey {
         switch self {
         case .home: "Home"
         case .explore: "Explore"

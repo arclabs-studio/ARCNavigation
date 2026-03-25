@@ -12,7 +12,8 @@ import Testing
 // MARK: - Mock Coordinator
 
 @Observable
-@MainActor private final class MockCoordinator: TabCoordinator {
+@MainActor
+private final class MockCoordinator: TabCoordinator {
     let tabRouter = TabRouter<TestTab, TestRoute>()
 
     func makeView(for _: TestRoute) -> some View {
@@ -23,7 +24,8 @@ import Testing
 // MARK: - TabCoordinator Tests
 
 @Suite("TabCoordinator")
-@MainActor struct CoordinatorTests {
+@MainActor
+struct CoordinatorTests {
     // MARK: - Helpers
 
     private func makeSUT() -> MockCoordinator {

@@ -45,7 +45,8 @@ import SwiftUI
 ///
 /// ### Creating Routes
 /// - ``view()``
-@MainActor public protocol Route: Hashable {
+@MainActor
+public protocol Route: Hashable {
     associatedtype Destination: View
 
     /// Returns the view corresponding to this route.

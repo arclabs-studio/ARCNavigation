@@ -61,7 +61,8 @@ import SwiftUI
 ///
 /// ### Configuration
 /// - ``loggingEnabled``
-@Observable public final class Router<R: Route> {
+@Observable
+public final class Router<R: Route> {
     // MARK: Private Properties
 
     /// Internal array for route tracking (useful for debugging and testing).

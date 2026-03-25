@@ -10,7 +10,6 @@ import SwiftUI
 
 /// Settings screen demonstrating stack inspection and tab router controls.
 struct SettingsView: View {
-
     // MARK: - Properties
 
     @Environment(Router<AppRoute>.self) private var router
@@ -96,13 +95,13 @@ struct SettingsView: View {
     private func routeDescription(for route: AppRoute) -> String {
         switch route {
         case .home:
-            return "home"
-        case .profile(let user):
-            return "profile(\(user.name))"
+            "home"
+        case let .profile(user):
+            "profile(\(user.name))"
         case .settings:
-            return "settings"
-        case .detail(let id):
-            return "detail(\(id))"
+            "settings"
+        case let .detail(id):
+            "detail(\(id))"
         }
     }
 }

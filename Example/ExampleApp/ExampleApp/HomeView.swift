@@ -10,7 +10,6 @@ import SwiftUI
 
 /// Main navigation hub demonstrating ARCNavigation features.
 struct HomeView: View {
-
     // MARK: - Properties
 
     @Environment(Router<AppRoute>.self) private var router
@@ -77,7 +76,6 @@ struct HomeView: View {
 // MARK: - UserRow
 
 private struct UserRow: View {
-
     let user: User
 
     var body: some View {

@@ -10,7 +10,6 @@ import SwiftUI
 
 /// Main tab view demonstrating tab-based navigation with `TabRouter`.
 struct MainTabView: View {
-
     // MARK: - Properties
 
     @Environment(AppCoordinator.self) private var coordinator

@@ -52,12 +52,13 @@ import SwiftUI
 /// - ``title``
 /// - ``icon``
 /// - ``badge``
-@MainActor public protocol NavigationTab: Hashable, Identifiable, CaseIterable
+@MainActor
+public protocol NavigationTab: Hashable, Identifiable, CaseIterable
 where AllCases: RandomAccessCollection {
     /// The display title for this tab.
     ///
-    /// Using `LocalizedStringKey` ensures titles respond to
-    /// `.environment(\.locale, ...)` and the String Catalog.
+    /// Using `LocalizedStringKey` ensures the tab title responds to
+    /// `.environment(\.locale, ...)` and the app's String Catalog.
     var title: LocalizedStringKey { get }
 
     /// The SF Symbol name for this tab's icon.

@@ -18,16 +18,15 @@ enum AppRoute: Route {
 
     // MARK: - Route
 
-    @ViewBuilder
-    func view() -> some View {
+    @ViewBuilder func view() -> some View {
         switch self {
         case .home:
             HomeView()
-        case .profile(let user):
+        case let .profile(user):
             ProfileView(user: user)
         case .settings:
             SettingsView()
-        case .detail(let id):
+        case let .detail(id):
             DetailView(id: id)
         }
     }

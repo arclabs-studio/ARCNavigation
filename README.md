@@ -144,7 +144,7 @@ enum AppTab: String, NavigationTab {
 
     var id: String { rawValue }
 
-    var title: String {
+    var title: LocalizedStringKey {
         switch self {
         case .home: "Home"
         case .explore: "Explore"

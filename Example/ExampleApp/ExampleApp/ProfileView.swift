@@ -10,7 +10,6 @@ import SwiftUI
 
 /// Profile screen demonstrating navigation with associated values.
 struct ProfileView: View {
-
     // MARK: - Properties
 
     let user: User

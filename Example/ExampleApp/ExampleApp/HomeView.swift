@@ -10,10 +10,10 @@ import SwiftUI
 
 /// Main navigation hub demonstrating ARCNavigation features.
 struct HomeView: View {
-
     // MARK: - Properties
 
     @Environment(Router<AppRoute>.self) private var router
+    @Environment(TabRouter<AppTab, AppRoute>.self) private var tabRouter
 
     // MARK: - Body
 
@@ -22,6 +22,7 @@ struct HomeView: View {
             usersSection
             quickActionsSection
             stackInfoSection
+            tabInfoSection
         }
         .navigationTitle("ARCNavigation Demo")
     }
@@ -59,12 +60,22 @@ struct HomeView: View {
             LabeledContent("Is Empty", value: router.isEmpty ? "Yes" : "No")
         }
     }
+
+    private var tabInfoSection: some View {
+        Section("Tab Router") {
+            LabeledContent("Active Tab", value: tabRouter.activeTab.title)
+            LabeledContent("Has Any Navigation", value: tabRouter.hasAnyNavigation ? "Yes" : "No")
+
+            ForEach(AppTab.allCases) { tab in
+                LabeledContent("\(tab.title) Depth", value: "\(tabRouter.depth(for: tab))")
+            }
+        }
+    }
 }
 
 // MARK: - UserRow
 
 private struct UserRow: View {
-
     let user: User
 
     var body: some View {
@@ -102,6 +113,7 @@ private struct UserRow: View {
         HomeView()
     }
     .environment(Router<AppRoute>())
+    .environment(TabRouter<AppTab, AppRoute>())
 }
 
 #Preview("Dark Mode") {
@@ -109,5 +121,6 @@ private struct UserRow: View {
         HomeView()
     }
     .environment(Router<AppRoute>())
+    .environment(TabRouter<AppTab, AppRoute>())
     .preferredColorScheme(.dark)
 }

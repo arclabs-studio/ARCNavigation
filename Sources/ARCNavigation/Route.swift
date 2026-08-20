@@ -57,3 +57,13 @@ public protocol Route: Hashable {
     /// - Returns: The SwiftUI view for this route.
     @ViewBuilder func view() -> Destination
 }
+
+// MARK: - EmptyView Default
+
+extension Route where Destination == EmptyView {
+    /// Default implementation returning `EmptyView` for routes
+    /// used with coordinators where view creation is delegated.
+    public func view() -> EmptyView {
+        EmptyView()
+    }
+}

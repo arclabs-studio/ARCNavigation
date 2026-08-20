@@ -69,10 +69,8 @@ public final class Router<R: Route> {
     private var routes: [R] = []
 
     /// Logger instance for navigation operations.
-    private let logger = ARCLogger(
-        subsystem: "studio.arclabs.ARCNavigation",
-        category: "Router"
-    )
+    private let logger = ARCLogger(subsystem: "studio.arclabs.ARCNavigation",
+                                   category: "Router")
 
     // MARK: Public Properties
 
@@ -118,10 +116,8 @@ public final class Router<R: Route> {
         path.append(route)
 
         if loggingEnabled {
-            logger.debug("Navigated to route", metadata: [
-                "route": .public(String(describing: route)),
-                "stackSize": .public(String(routes.count))
-            ])
+            logger.debug("Navigated to route", metadata: ["route": .public(String(describing: route)),
+                                                          "stackSize": .public(String(routes.count))])
         }
     }
 
@@ -147,10 +143,8 @@ public final class Router<R: Route> {
         path.removeLast()
 
         if loggingEnabled {
-            logger.debug("Popped route", metadata: [
-                "route": .public(String(describing: poppedRoute)),
-                "stackSize": .public(String(routes.count))
-            ])
+            logger.debug("Popped route", metadata: ["route": .public(String(describing: poppedRoute)),
+                                                    "stackSize": .public(String(routes.count))])
         }
     }
 
@@ -170,9 +164,7 @@ public final class Router<R: Route> {
         path.removeLast(path.count)
 
         if loggingEnabled {
-            logger.debug("Popped to root", metadata: [
-                "routesRemoved": .public(String(previousCount))
-            ])
+            logger.debug("Popped to root", metadata: ["routesRemoved": .public(String(previousCount))])
         }
     }
 
@@ -195,9 +187,8 @@ public final class Router<R: Route> {
     public func popTo(_ route: R) {
         guard let index = routes.firstIndex(of: route) else {
             if loggingEnabled {
-                logger.warning("PopTo failed: route not in stack", metadata: [
-                    "targetRoute": .public(String(describing: route))
-                ])
+                logger.warning("PopTo failed: route not in stack",
+                               metadata: ["targetRoute": .public(String(describing: route))])
             }
             return
         }
@@ -207,11 +198,9 @@ public final class Router<R: Route> {
         path.removeLast(countToRemove)
 
         if loggingEnabled {
-            logger.debug("Popped to route", metadata: [
-                "targetRoute": .public(String(describing: route)),
-                "routesRemoved": .public(String(countToRemove)),
-                "stackSize": .public(String(routes.count))
-            ])
+            logger.debug("Popped to route", metadata: ["targetRoute": .public(String(describing: route)),
+                                                       "routesRemoved": .public(String(countToRemove)),
+                                                       "stackSize": .public(String(routes.count))])
         }
     }
 
@@ -227,16 +216,22 @@ public final class Router<R: Route> {
     /// ```swift
     /// #expect(router.currentRoutes == [.home, .profile(userID: "123")])
     /// ```
-    public var currentRoutes: [R] { routes }
+    public var currentRoutes: [R] {
+        routes
+    }
 
     /// Indicates whether the navigation stack is empty.
     ///
     /// Returns `true` when no routes have been pushed onto the stack,
     /// meaning the user is at the root view.
-    public var isEmpty: Bool { routes.isEmpty }
+    public var isEmpty: Bool {
+        routes.isEmpty
+    }
 
     /// The number of screens in the navigation stack.
     ///
     /// Returns `0` when at the root view.
-    public var count: Int { routes.count }
+    public var count: Int {
+        routes.count
+    }
 }

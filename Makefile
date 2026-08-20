@@ -1,77 +1,51 @@
-# ARCNavigation Makefile
-# Development automation for Swift Package
+# ARCDevTools Makefile (Swift Package)
+# Auto-generated - Do not edit manually
+#
+# build/test targets shell out to `swift` for CI and headless use.
+# For interactive build, test, and diagnostics, prefer the Xcode MCP
+# (see the `arc-mcp-xcode` skill) over running these targets by hand.
 
-.PHONY: all build test lint format clean docs pre-commit help
+.PHONY: help tools lint format fix build test setup hooks clean
 
-# Default target
-all: build test lint
-
-# Build the package
-build:
-	@echo "Building ARCNavigation..."
-	swift build
-
-# Build for release
-release:
-	@echo "Building for release..."
-	swift build -c release
-
-# Run tests
-test:
-	@echo "Running tests..."
-	swift test
-
-# Run SwiftLint
-lint:
-	@echo "Running SwiftLint..."
-	swiftlint lint
-
-# Fix SwiftLint issues
-lint-fix:
-	@echo "Fixing SwiftLint issues..."
-	swiftlint lint --fix
-
-# Run SwiftFormat check
-format-check:
-	@echo "Checking formatting..."
-	swiftformat --lint .
-
-# Apply SwiftFormat
-format:
-	@echo "Applying SwiftFormat..."
-	swiftformat .
-
-# Clean build artifacts
-clean:
-	@echo "Cleaning..."
-	swift package clean
-	rm -rf .build
-
-# Generate documentation
-docs:
-	@echo "Generating documentation..."
-	swift package generate-documentation
-
-# Pre-commit checks (run before committing)
-pre-commit: format lint-fix build test
-	@echo "Pre-commit checks passed!"
-
-# Show help
 help:
-	@echo "ARCNavigation Makefile"
-	@echo ""
-	@echo "Usage: make [target]"
-	@echo ""
-	@echo "Targets:"
-	@echo "  all          Build, test, and lint (default)"
-	@echo "  build        Build the package"
-	@echo "  release      Build for release"
-	@echo "  test         Run tests"
-	@echo "  lint         Run SwiftLint"
-	@echo "  lint-fix     Fix SwiftLint issues"
-	@echo "  format-check Check formatting with SwiftFormat"
-	@echo "  format       Apply SwiftFormat"
-	@echo "  clean        Clean build artifacts"
-	@echo "  docs         Generate documentation"
-	@echo "  pre-commit   Run all checks before committing"
-	@echo "  help         Show this help message"
+	@echo "ARCDevTools - Available commands:"
+	@echo "  make tools     - Install pinned SwiftLint/SwiftFormat (.arc-tools/)"
+	@echo "  make lint      - Run SwiftLint"
+	@echo "  make format    - Run SwiftFormat (dry-run)"
+	@echo "  make fix       - Apply SwiftFormat"
+	@echo "  make build     - Build the package"
+	@echo "  make test      - Run tests"
+	@echo "  make setup     - Re-install hooks and configs"
+	@echo "  make hooks     - Re-install git hooks only"
+	@echo "  make clean     - Clean build artifacts"
+
+# Quality targets delegate to ARCDevTools scripts, which resolve the SwiftLint
+# and SwiftFormat versions pinned in .arc-tool-versions — the same versions CI
+# installs. Run `make tools` once (and after any pin bump) to install them.
+tools:
+	@./ARCDevTools/scripts/install-tools.sh
+
+lint:
+	@./ARCDevTools/scripts/lint.sh
+
+format:
+	@./ARCDevTools/scripts/format.sh --dry-run
+
+fix:
+	@./ARCDevTools/scripts/format.sh
+
+build:
+	@swift build
+
+test:
+	@swift test --parallel
+
+setup:
+	@./ARCDevTools/arcdevtools-setup
+
+hooks:
+	@./ARCDevTools/hooks/install-hooks.sh
+
+clean:
+	@rm -rf .build DerivedData
+	@echo "✓ Build artifacts removed"

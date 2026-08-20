@@ -30,32 +30,57 @@ swift build -c release
 
 ```
 Sources/ARCNavigation/
-├── Route.swift          # Protocol for type-safe route definitions
-├── Router.swift         # @Observable navigation manager
-└── View+Router.swift    # SwiftUI View extension (.withRouter)
+├── Route.swift            # Protocol for type-safe route definitions
+├── Router.swift           # @Observable navigation manager
+├── NavigationTab.swift    # Protocol for tab definitions
+├── TabRouter.swift        # Per-tab navigation manager
+├── Coordinator.swift      # Coordinator and TabCoordinator protocols
+├── View+Router.swift      # SwiftUI View extension (.withRouter)
+└── View+TabRouter.swift   # SwiftUI View extension (.withTabNavigation)
 
 Tests/ARCNavigationTests/
-└── RouterTests.swift    # Swift Testing tests
+├── TestHelpers.swift      # Shared test mocks (TestTab, TestRoute)
+├── RouterTests.swift      # Router tests
+├── TabRouterTests.swift   # TabRouter tests
+└── CoordinatorTests.swift # Coordinator tests
 
-Examples/ARCNavigationDemo/
-└── ...                  # Demo app with MVVM example
+Example/ExampleApp/
+└── ...                    # Demo app with tab navigation example
 ```
 
 ## Core Architecture
 
-**Three components work together:**
+**Single-stack navigation (3 components):**
 
-1. **Route Protocol** (`Route.swift`): Defines `Hashable` routes with a `view()` method returning the destination view. Implement as an enum with associated values.
+1. **Route Protocol** (`Route.swift`): Defines `Hashable` routes with a `view()` method returning the destination view. Implement as an enum with associated values. Routes with `EmptyView` destination get a default `view()` implementation for coordinator-based usage.
 
 2. **Router** (`Router.swift`): `@Observable` class managing `NavigationPath`. Tracks routes internally for testing/debugging. Key methods: `navigate(to:)`, `pop()`, `popToRoot()`, `popTo(_:)`.
 
 3. **View Extension** (`View+Router.swift`): `.withRouter(_:destination:)` wraps content in `NavigationStack` and injects router via `.environment()`.
 
-**Usage pattern:**
+**Tab-based navigation (4 additional components):**
+
+4. **NavigationTab** (`NavigationTab.swift`): Protocol for tab definitions with `title`, `icon`, and optional `badge`. Implement as a `CaseIterable` enum.
+
+5. **TabRouter** (`TabRouter.swift`): `@Observable` class managing per-tab `Router` instances with lazy creation, search context, and `activeTabBinding` for `TabView`.
+
+6. **Coordinator** (`Coordinator.swift`): `Coordinator` protocol for route-to-view mapping. `TabCoordinator` extends it with a `tabRouter` and default navigation methods.
+
+7. **View Extension** (`View+TabRouter.swift`): `.withTabNavigation(_:for:destination:)` wraps content in per-tab `NavigationStack` and injects both `Router` and `TabRouter` into the environment.
+
+**Usage patterns:**
+
+*Simple (single-stack):*
 - Define routes as enum conforming to `Route`
 - Create `Router<YourRoute>` as `@State` in App
 - Apply `.withRouter(router) { $0.view() }` to root view
 - Access router via `@Environment(Router<YourRoute>.self)`
+
+*Tab-based:*
+- Define tabs as enum conforming to `NavigationTab`
+- Create `TabRouter<YourTab, YourRoute>` or a `TabCoordinator`
+- Use `TabView(selection: tabRouter.activeTabBinding)` with `.withTabNavigation()` per tab
+- Access per-tab `Router` via `@Environment(Router<YourRoute>.self)`
 
 ## Testing
 

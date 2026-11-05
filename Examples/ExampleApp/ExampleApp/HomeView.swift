@@ -63,11 +63,17 @@ struct HomeView: View {
 
     private var tabInfoSection: some View {
         Section("Tab Router") {
-            LabeledContent("Active Tab", value: tabRouter.activeTab.title)
+            LabeledContent("Active Tab") {
+                Text(tabRouter.activeTab.title)
+            }
             LabeledContent("Has Any Navigation", value: tabRouter.hasAnyNavigation ? "Yes" : "No")
 
             ForEach(AppTab.allCases) { tab in
-                LabeledContent("\(tab.title) Depth", value: "\(tabRouter.depth(for: tab))")
+                LabeledContent {
+                    Text(tabRouter.depth(for: tab), format: .number)
+                } label: {
+                    Text("\(Text(tab.title)) Depth")
+                }
             }
         }
     }

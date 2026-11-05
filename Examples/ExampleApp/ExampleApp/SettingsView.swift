@@ -80,7 +80,11 @@ struct SettingsView: View {
             LabeledContent("Has Any Navigation", value: tabRouter.hasAnyNavigation ? "Yes" : "No")
 
             ForEach(AppTab.allCases) { tab in
-                LabeledContent("\(tab.title) Depth", value: "\(tabRouter.depth(for: tab))")
+                LabeledContent {
+                    Text(tabRouter.depth(for: tab), format: .number)
+                } label: {
+                    Text("\(Text(tab.title)) Depth")
+                }
             }
 
             Button("Reset All Navigation") {

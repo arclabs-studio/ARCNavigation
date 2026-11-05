@@ -11,7 +11,7 @@ Demo application for ARCNavigation package.
 
 1. Open `ExampleApp.xcodeproj` in Xcode:
    ```bash
-   cd Example/ExampleApp
+   cd Examples/ExampleApp
    open ExampleApp.xcodeproj
    ```
 
@@ -25,7 +25,7 @@ If you need to regenerate the Xcode project after modifying `project.yml`:
 
 ```bash
 brew install xcodegen  # if not installed
-cd Example/ExampleApp
+cd Examples/ExampleApp
 xcodegen generate
 ```
 

@@ -229,7 +229,7 @@ ARCNavigation/
 │       ├── RouterTests.swift      # Router tests
 │       ├── TabRouterTests.swift   # TabRouter tests
 │       └── CoordinatorTests.swift # Coordinator tests
-├── Example/
+├── Examples/
 │   └── ExampleApp/                # Standalone demo Xcode project
 └── Documentation.docc/            # DocC documentation
 ```

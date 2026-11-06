@@ -26,7 +26,7 @@ extension View {
     /// ## Example
     ///
     /// ```swift
-    /// TabView(selection: tabRouter.activeTabBinding) {
+    /// TabView(selection: $tabRouter.selectedTab) {
     ///     ForEach(AppTab.allCases) { tab in
     ///         ContentView()
     ///             .withTabNavigation(tabRouter, for: tab) { route in

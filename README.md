@@ -165,7 +165,7 @@ enum AppTab: String, NavigationTab {
 @State private var tabRouter = TabRouter<AppTab, AppRoute>()
 
 // 3. Use with TabView
-TabView(selection: tabRouter.activeTabBinding) {
+TabView(selection: $tabRouter.selectedTab) {
     ForEach(AppTab.allCases) { tab in
         ContentView()
             .withTabNavigation(tabRouter, for: tab) { $0.view() }

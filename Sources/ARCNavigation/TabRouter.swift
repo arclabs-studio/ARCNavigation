@@ -24,7 +24,7 @@ import SwiftUI
 /// ```swift
 /// @State private var tabRouter = TabRouter<AppTab, AppRoute>()
 ///
-/// TabView(selection: tabRouter.activeTabBinding) {
+/// TabView(selection: $tabRouter.selectedTab) {
 ///     ForEach(AppTab.allCases) { tab in
 ///         ContentView()
 ///             .withTabNavigation(tabRouter, for: tab) { route in
@@ -262,21 +262,27 @@ public final class TabRouter<Tab: NavigationTab, R: Route> {
         }
     }
 
-    // MARK: - Binding
+    // MARK: - Tab Selection
+
+    /// The active tab, for `TabView(selection: $tabRouter.selectedTab)`.
+    ///
+    /// Switching tabs through this property also deactivates the search context.
+    /// Bind to it through `@Bindable`.
+    public var selectedTab: Tab {
+        get { activeTab }
+        set {
+            activeTab = newValue
+            isSearchActive = false
+
+            if loggingEnabled {
+                logger.debug("Switched tab", metadata: ["tab": .public(String(describing: newValue))])
+            }
+        }
+    }
 
     /// A binding to the active tab that clears search on tab switch.
-    ///
-    /// Use this binding with `TabView(selection:)` to automatically
-    /// deactivate the search context when the user switches tabs.
+    @available(*, deprecated, message: "Bind to selectedTab instead: TabView(selection: $tabRouter.selectedTab)")
     public var activeTabBinding: Binding<Tab> {
-        Binding(get: { self.activeTab },
-                set: { newTab in
-                    self.activeTab = newTab
-                    self.isSearchActive = false
-
-                    if self.loggingEnabled {
-                        self.logger.debug("Switched tab", metadata: ["tab": .public(String(describing: newTab))])
-                    }
-                })
+        Bindable(self).selectedTab
     }
 }

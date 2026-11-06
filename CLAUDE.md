@@ -62,7 +62,7 @@ Examples/ExampleApp/
 
 4. **NavigationTab** (`NavigationTab.swift`): Protocol for tab definitions with `title`, `icon`, and optional `badge`. Implement as a `CaseIterable` enum.
 
-5. **TabRouter** (`TabRouter.swift`): `@Observable` class managing per-tab `Router` instances with lazy creation, search context, and `activeTabBinding` for `TabView`.
+5. **TabRouter** (`TabRouter.swift`): `@Observable` class managing per-tab `Router` instances with lazy creation, search context, and `selectedTab` for `TabView`.
 
 6. **Coordinator** (`Coordinator.swift`): `Coordinator` protocol for route-to-view mapping. `TabCoordinator` extends it with a `tabRouter` and default navigation methods.
 
@@ -79,7 +79,7 @@ Examples/ExampleApp/
 *Tab-based:*
 - Define tabs as enum conforming to `NavigationTab`
 - Create `TabRouter<YourTab, YourRoute>` or a `TabCoordinator`
-- Use `TabView(selection: tabRouter.activeTabBinding)` with `.withTabNavigation()` per tab
+- Use `TabView(selection: $tabRouter.selectedTab)` (via `@Bindable`) with `.withTabNavigation()` per tab
 - Access per-tab `Router` via `@Environment(Router<YourRoute>.self)`
 
 ## Testing

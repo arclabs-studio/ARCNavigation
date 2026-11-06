@@ -279,10 +279,4 @@ public final class TabRouter<Tab: NavigationTab, R: Route> {
             }
         }
     }
-
-    /// A binding to the active tab that clears search on tab switch.
-    @available(*, deprecated, message: "Bind to selectedTab instead: TabView(selection: $tabRouter.selectedTab)")
-    public var activeTabBinding: Binding<Tab> {
-        Bindable(self).selectedTab
-    }
 }

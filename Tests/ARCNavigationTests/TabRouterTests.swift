@@ -159,17 +159,6 @@ struct TabRouterTests {
         #expect(sut.isSearchActive == false)
     }
 
-    @available(*, deprecated, message: "Exercises the deprecated activeTabBinding")
-    @Test("ActiveTabBinding clears search on tab switch") func activeTabBindingClearsSearch() {
-        let sut = makeSUT()
-        sut.isSearchActive = true
-
-        sut.activeTabBinding.wrappedValue = .explore
-
-        #expect(sut.activeTab == .explore)
-        #expect(sut.isSearchActive == false)
-    }
-
     @Test("Navigate in tab clears search flag") func navigateInTabClearsSearch() {
         let sut = makeSUT()
         sut.isSearchActive = true

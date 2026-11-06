@@ -18,7 +18,7 @@ let package = Package(name: "ARCNavigation",
 
                       products: [.library(name: "ARCNavigation",
                                           targets: ["ARCNavigation"])
-                          // Note: Demo app is a standalone Xcode project in Example/ folder
+                          // Note: Demo app is a standalone Xcode project in Examples/ folder
                       ],
 
                       // MARK: - Dependencies
@@ -37,7 +37,7 @@ let package = Package(name: "ARCNavigation",
                           .testTarget(name: "ARCNavigationTests",
                                       dependencies: ["ARCNavigation"],
                                       path: "Tests/ARCNavigationTests")
-                          // Note: Demo apps are standalone Xcode projects in Example/ folder
+                          // Note: Demo apps are standalone Xcode projects in Examples/ folder
                           // NOT executable targets in Package.swift
                       ],
 

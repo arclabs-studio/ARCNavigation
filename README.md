@@ -3,7 +3,7 @@
 ![Swift](https://img.shields.io/badge/Swift-6.0-orange.svg)
 ![Platforms](https://img.shields.io/badge/Platforms-iOS%2017%2B%20%7C%20macOS%2014%2B%20%7C%20tvOS%2017%2B%20%7C%20watchOS%2010%2B-blue.svg)
 ![License](https://img.shields.io/badge/License-PolyForm%20Noncommercial%201.0.0-orange.svg)
-![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/Version-1.1.0-blue.svg)
 
 **A type-safe, testable SwiftUI navigation system for modern iOS apps.**
 
@@ -165,7 +165,7 @@ enum AppTab: String, NavigationTab {
 @State private var tabRouter = TabRouter<AppTab, AppRoute>()
 
 // 3. Use with TabView
-TabView(selection: tabRouter.activeTabBinding) {
+TabView(selection: $tabRouter.selectedTab) {
     ForEach(AppTab.allCases) { tab in
         ContentView()
             .withTabNavigation(tabRouter, for: tab) { $0.view() }
@@ -229,7 +229,7 @@ ARCNavigation/
 │       ├── RouterTests.swift      # Router tests
 │       ├── TabRouterTests.swift   # TabRouter tests
 │       └── CoordinatorTests.swift # Coordinator tests
-├── Example/
+├── Examples/
 │   └── ExampleApp/                # Standalone demo Xcode project
 └── Documentation.docc/            # DocC documentation
 ```

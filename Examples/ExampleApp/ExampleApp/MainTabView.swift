@@ -17,7 +17,9 @@ struct MainTabView: View {
     // MARK: - Body
 
     var body: some View {
-        TabView(selection: coordinator.tabRouter.activeTabBinding) {
+        @Bindable var tabRouter = coordinator.tabRouter
+
+        TabView(selection: $tabRouter.selectedTab) {
             homeTab
             exploreTab
             settingsTab

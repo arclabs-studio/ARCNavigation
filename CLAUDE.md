@@ -44,7 +44,7 @@ Tests/ARCNavigationTests/
 ├── TabRouterTests.swift   # TabRouter tests
 └── CoordinatorTests.swift # Coordinator tests
 
-Example/ExampleApp/
+Examples/ExampleApp/
 └── ...                    # Demo app with tab navigation example
 ```
 

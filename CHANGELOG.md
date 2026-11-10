@@ -5,6 +5,27 @@ All notable changes to ARCNavigation will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-11-06
+
+### Added
+
+- **`TabRouter.selectedTab`.** A settable property for the active tab, used as
+  `TabView(selection: $tabRouter.selectedTab)` through `@Bindable`. Setting it switches the active
+  tab, deactivates the search context and logs the switch when `loggingEnabled` is on, exactly as
+  `activeTabBinding` did ([#20](https://github.com/arclabs-studio/ARCNavigation/pull/20)).
+
+### Deprecated
+
+- **`TabRouter.activeTabBinding`** — use `$tabRouter.selectedTab` instead. It still works and now
+  returns `Bindable(self).selectedTab`, so behaviour is unchanged. README, DocC and the demo app use
+  the new property ([#20](https://github.com/arclabs-studio/ARCNavigation/pull/20)).
+
+### Examples
+
+- The demo app moves from `Example/` to `Examples/ExampleApp/` and binds its `TabView` through
+  `selectedTab` ([#19](https://github.com/arclabs-studio/ARCNavigation/pull/19),
+  [#20](https://github.com/arclabs-studio/ARCNavigation/pull/20)).
+
 ## [1.0.0] - 2026-08-20
 
 First public release of **ARCNavigation**.
